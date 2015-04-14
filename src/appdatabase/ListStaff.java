@@ -41,4 +41,10 @@ public class ListStaff {
         this.addEmployer(new Employe(4, "Maria", "Leiva", null, 623145678, null, new ListShops("Default").getShopById(0)));
         
     }
+    public ArrayList<Employe> getListStaff() {
+        return liststaff;
+    }
+    public int getSize(){
+       return this.liststaff.size();
+    }
 }

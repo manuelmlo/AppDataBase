@@ -10,6 +10,7 @@ package appdatabase;
  * @author Manuel Manzano López
  */
 public class Shop {
+    private final String[] HEAD={"Nombre de la Tienda","Dirección","Teléfono", "E-mail"};
     private int codShop ;
     private String nameShop ;
     private String address;
@@ -67,5 +68,11 @@ public class Shop {
     public void setEmail(String email) {
         this.email = email;
     }
-  
+    public Object[] getShop(){
+        return new Object[]{this.getNameShop(),this.getAddress(),this.getPhone()
+                ,this.getEmail()};
+    }
+    public String[] getHead(){
+        return HEAD;
+    }
 }

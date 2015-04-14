@@ -14,6 +14,8 @@ import java.util.ArrayList;
  * @author Manuel Manzano López
  */
 public class Product {
+    private final String[] HEAD={"Nombre","Fabricante","Modelo","Tipo", 
+        "Especificaciones","Descripción","Color","Fotos"};
     private int codProduct;
     private String nameProduct;
     private String builder;
@@ -119,5 +121,15 @@ public class Product {
 
     public void setPhotos(Image photo) {
         this.photos.add(photo);
+    }
+    
+    public Object[] getProduct(){
+        return new Object[]{this.getNameProduct(),this.getBuilder(),
+            this.getMark(),this.getType(),this.getSpecifications(),
+            this.getDescriptions(),this.getColour(),this.getPhotos()};
+    }
+    
+    public String[] getHead(){
+        return HEAD;
     }
 }

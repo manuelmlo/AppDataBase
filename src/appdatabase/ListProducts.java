@@ -46,5 +46,11 @@ public class ListProducts {
         this.addProduct(new Product(4, "Tarjeta Gráfica", "XFX", "AMD", 
                 new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.red, null));
     }
+    public ArrayList<Product> getListProducts() {
+        return listProduct;
+    }
+    public int getSize(){
+       return this.listProduct.size();
+    }
     
 }

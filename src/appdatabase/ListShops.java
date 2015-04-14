@@ -28,16 +28,35 @@ public class ListShops {
     }
     
     public Shop getShopById(int codShop){
-        for (Shop listShop1 : listShop) {
-            if(listShop1.getCodShop()==codShop){
-                return listShop.get(codShop);
+        if(listShop!=null){
+            for (int x=0; x<listShop.size();x++) {
+                if(listShop.get(x).getCodShop()==codShop){
+                    return listShop.get(codShop);
+                }
             }
         }
         return null;
     }
+    
+    public Shop getShopById(){
+        if(listShop!=null){
+            return listShop.get(0);
+        }else{
+            return null;
+        }
+    }
+    
     private void setDefault(){
         
         this.addShop(new Shop(1, "Tienda de Ubrique", "C/Avenida de Oria, Nº100, 11600, Ubrique, Cádiz",956460000, "tiendaubrique@gm.com"));
         this.addShop(new Shop(2,"Tienda de Arcos", "C/Avenida Miguel Mancheño, Nº50, Arcos, Cádiz", 956700000, "tiendaarcos@gm.com"));
     }
+
+    public ArrayList<Shop> getListShop() {
+        return listShop;
+    }
+    public int getSize(){
+       return this.listShop.size();
+    }
+    
 }

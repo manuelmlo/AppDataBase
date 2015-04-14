@@ -42,4 +42,10 @@ public class ListStocks {
         this.addStock(new Stock(new ListShops("Default").getShopById(0),new ListProducts("Default").getProductById(2), 6));
         this.addStock(new Stock(new ListShops("Default").getShopById(1),new ListProducts("Default").getProductById(2), 2));
     }
+    public ArrayList<Stock> getListStock() {
+        return listStock;
+    }
+    public int getSize(){
+       return this.listStock.size();
+    }
 }

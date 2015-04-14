@@ -10,6 +10,7 @@ package appdatabase;
  * @author Manuel Manzano López
  */
 public class Stock {
+    private final String[] HEAD={"Tienda","Producto","Stock"};
     private Shop codShop;
     private Product codProduct;
     private int stock;
@@ -46,5 +47,12 @@ public class Stock {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+    public Object[] getProduct(){
+        return new Object[]{this.getCodShop(),this.getCodShop(),this.getStock()};
+    }
+    
+    public String[] getHead(){
+        return HEAD;
     }
 }

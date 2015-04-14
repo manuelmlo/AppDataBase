@@ -10,6 +10,7 @@ package appdatabase;
  * @author Manuel Manzano López
  */
 public class Employe {
+    private final String[] HEAD={"Nombre","Apellidos","Dirección","Teléfono", "E-mail","Tienda"};
     private int codEmploye;
     private String name;
     private String surname;
@@ -89,5 +90,11 @@ public class Employe {
         this.codshop = codshop;
     }
     
-    
+    public Object[] getEmploye(){
+        return new Object[]{this.getName(),this.getAddress(),this.getPhone()
+                ,this.getEmail(),this.getCodshop()};
+    }
+    public String[] getHead(){
+        return HEAD;
+    }
 }
