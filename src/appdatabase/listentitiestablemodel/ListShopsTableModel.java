@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appdatabase;
+package appdatabase.listentitiestablemodel;
 
+import appdatabase.listentities.ListShops;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -17,7 +18,7 @@ public class ListShopsTableModel extends AbstractTableModel{
     
     public ListShopsTableModel (ListShops listShops){
         this.arrayListShop=listShops;
-        this.nameColumns=listShops.getShopById().getHead();
+        this.nameColumns=listShops.getShopById(1).getHead();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class ListShopsTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         System.out.println(rowIndex);
         return arrayListShop.getListShop().get(rowIndex).getShop()[columnIndex];
-//        return arrayListShop.getShopById().getShop()[columnIndex];
+//        return arrayListShop.getShopById().getShop()[columnIndex]; 
     }
 
     @Override

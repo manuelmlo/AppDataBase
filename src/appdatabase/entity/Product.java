@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appdatabase;
+package appdatabase.entity;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Product {
     private final String[] HEAD={"Nombre","Fabricante","Modelo","Tipo", 
-        "Especificaciones","Descripción","Color","Fotos"};
+        "Especificaciones","Descripción","Color","Fotos","Precio"};
     private int codProduct;
     private String nameProduct;
     private String builder;
@@ -24,7 +24,10 @@ public class Product {
     private String[] specifications;
     private String descriptions;
     private Color colour;
-    private ArrayList<Image> photos;
+    private ArrayList<Image> photos=new ArrayList();
+    private int price;
+
+
 
     public Product(){
     
@@ -39,7 +42,7 @@ public class Product {
         this.type=type;
         this.specifications=specifications;
         this.colour=colour;
-        this.photos.add(photo);
+        this.setPhotos(photo);
     }
 
     public int getCodProduct() {
@@ -47,7 +50,8 @@ public class Product {
     }
 
     public void setCodProduct(int codProduct) {
-        this.codProduct = codProduct;
+        this.codProduct 
+                = codProduct;
     }
 
     public String getNameProduct() {
@@ -122,11 +126,18 @@ public class Product {
     public void setPhotos(Image photo) {
         this.photos.add(photo);
     }
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
     
     public Object[] getProduct(){
         return new Object[]{this.getNameProduct(),this.getBuilder(),
             this.getMark(),this.getType(),this.getSpecifications(),
-            this.getDescriptions(),this.getColour(),this.getPhotos()};
+            this.getDescriptions(),this.getColour(),this.getPhotos(),this.getPrice()};
     }
     
     public String[] getHead(){

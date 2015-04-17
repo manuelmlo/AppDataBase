@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appdatabase;
+package appdatabase.listentities;
 
+import appdatabase.entity.Shop;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * @author Manuel Manzano López
  */
 public class ListShops {
+    private final String NAME="Tiendas";
     private ArrayList<Shop> listShop;
     
     public ListShops(String Default){

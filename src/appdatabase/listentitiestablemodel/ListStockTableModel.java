@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appdatabase;
+package appdatabase.listentitiestablemodel;
 
+import appdatabase.listentities.ListStocks;
 import javax.swing.table.AbstractTableModel;
 
 /**

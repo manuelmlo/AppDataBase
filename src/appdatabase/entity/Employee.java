@@ -3,28 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appdatabase;
+package appdatabase.entity;
+
+import appdatabase.entity.Shop;
+import java.util.Date;
 
 /**
  *
  * @author Manuel Manzano López
  */
-public class Employe {
-    private final String[] HEAD={"Nombre","Apellidos","Dirección","Teléfono", "E-mail","Tienda"};
+public class Employee {
+    private final String[] HEAD={"Nombre","Apellidos","Fecha Nacimiento",
+        "Dirección","Teléfono", "E-mail","Empleado","Tienda"};
     private int codEmploye;
     private String name;
     private String surname;
+    private Date dateBorn;
     private String address;
     private int phone;
     private String email;
+    private boolean ismanager;
     private Shop codshop;
     
-    public Employe(){
+    public Employee(){
+        
     
     }
     
-    public Employe(int codEmploye, String name, String surname,String address,
-            int phone, String email, Shop codShop){
+    public Employee(int codEmploye, String name, String surname,Date dateborn,String address,
+            int phone, String email,boolean ismanager, Shop codShop){
         this.codEmploye=codEmploye;
         this.name=name;
         this.surname=surname;
@@ -89,10 +96,27 @@ public class Employe {
     public void setCodshop(Shop codshop) {
         this.codshop = codshop;
     }
+
+    public Date getDateBorn() {
+        return dateBorn;
+    }
+
+    public void setDateBorn(Date dateBorn) {
+        this.dateBorn = dateBorn;
+    }
+
+    public boolean isIsmanager() {
+        return ismanager;
+    }
+
+    public void setIsmanager(boolean ismanager) {
+        this.ismanager = ismanager;
+    }
+    
     
     public Object[] getEmploye(){
-        return new Object[]{this.getName(),this.getAddress(),this.getPhone()
-                ,this.getEmail(),this.getCodshop()};
+        return new Object[]{this.getName(),this.getDateBorn(),this.getAddress(),this.getPhone()
+                ,this.getEmail(),this.isIsmanager(),this.getCodshop()};
     }
     public String[] getHead(){
         return HEAD;

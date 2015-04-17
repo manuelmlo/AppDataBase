@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appdatabase;
+package appdatabase.listentitiestablemodel;
 
+import appdatabase.listentities.ListStaff;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -23,7 +24,7 @@ public class ListStaffTableModel extends AbstractTableModel{
 
     @Override
     public int getRowCount() {
-        return arrayListStaff.getListStaff().size();
+        return arrayListStaff.getSize();
     }
 
     @Override

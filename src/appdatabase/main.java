@@ -5,9 +5,21 @@
  */
 package appdatabase;
 
+import appdatabase.defaulttablerender.Colour;
+import appdatabase.defaulttablerender.Dates;
+import appdatabase.defaulttablerender.Price;
+import appdatabase.listentities.ListProducts;
+import appdatabase.listentitiestablemodel.ListShopsTableModel;
+import appdatabase.listentities.ListShops;
+import appdatabase.listentities.ListStaff;
+import appdatabase.listentities.ListStocks;
+import appdatabase.listentitiestablemodel.ListProductsTableModel;
+import appdatabase.listentitiestablemodel.ListStaffTableModel;
+import appdatabase.listentitiestablemodel.ListStockTableModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -16,13 +28,17 @@ import javax.swing.JOptionPane;
 public class main extends javax.swing.JFrame {
     ConectServer conectServer;
     ListShops listadeTiendas = new ListShops("Default");
+    ListStaff listadeempleados = new ListStaff("Default");
+    ListProducts listadeproductos= new ListProducts("Default");
+    ListStocks listadestocks = new ListStocks("Default");
             
     /**
      * Creates new form main
      */
     public main() {
         initComponents();
-        jTable1.setModel(new ListShopsTableModel(listadeTiendas));
+        jTableShops.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableShops.setModel(new ListShopsTableModel(listadeTiendas));
         this.repaint();
         
     }
@@ -47,12 +63,12 @@ public class main extends javax.swing.JFrame {
         jButtonOKConections = new javax.swing.JButton();
         jButtonCancelConections = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JSeparator();
-        jToolBarRibbon = new javax.swing.JToolBar();
         jTabbedPanemenuRibbon = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        jToolBarRibbon = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanelStatusBar = new javax.swing.JPanel();
@@ -60,7 +76,16 @@ public class main extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableShops = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTableEmployee = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableProducts = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableStock = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListTable = new javax.swing.JList();
         jMenuBarmenu = new javax.swing.JMenuBar();
         jMenuFileExit = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -180,12 +205,6 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-
-        jToolBarRibbon.setFloatable(false);
-        jToolBarRibbon.setRollover(true);
-
         jTabbedPanemenuRibbon.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTabbedPanemenuRibbon.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -245,7 +264,11 @@ public class main extends javax.swing.JFrame {
 
         jTabbedPanemenuRibbon.addTab("tab4", jPanel9);
 
-        jToolBarRibbon.add(jTabbedPanemenuRibbon);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+
+        jToolBarRibbon.setFloatable(false);
+        jToolBarRibbon.setRollover(true);
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -279,7 +302,23 @@ public class main extends javax.swing.JFrame {
             .addComponent(jSeparator6)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTabbedPane1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
+
+        jTableShops.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -290,9 +329,79 @@ public class main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTableShops);
 
         jTabbedPane1.addTab("tab1", jScrollPane2);
+
+        jTableEmployee.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jTableEmployee);
+
+        jTabbedPane1.addTab("tab1", jScrollPane5);
+
+        jTableProducts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTableProducts);
+
+        jTabbedPane1.addTab("tab1", jScrollPane4);
+
+        jTableStock.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTableStock);
+
+        jTabbedPane1.addTab("tab1", jScrollPane6);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jListTable.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Tiendas", "Empleados", "Productos", "Stock", " " };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jListTable.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListTableValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jListTable);
 
         jMenuFileExit.setText("Archivo");
 
@@ -432,25 +541,38 @@ public class main extends javax.swing.JFrame {
             .addComponent(jPanelStatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(26, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(640, 640, 640))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(164, 164, 164))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 34, Short.MAX_VALUE))
+                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelStatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -469,7 +591,7 @@ public class main extends javax.swing.JFrame {
             jMenuBarmenu.setVisible(false);
             jTabbedPanemenuRibbon.setSize(jToolBarRibbon.getSize());
             this.repaint();
-            jTable1.repaint();
+            jTableShops.repaint();
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -507,6 +629,43 @@ public class main extends javax.swing.JFrame {
         jListConnections.setModel(null);
     }//GEN-LAST:event_jButtonOKConectionsActionPerformed
 
+    private void jListTableValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListTableValueChanged
+       
+        switch(jListTable.getSelectedIndex()){
+            case 0:
+                jTabbedPane1.setSelectedIndex(0);
+                jTableShops.setModel(new ListShopsTableModel(listadeTiendas));
+                
+                break;
+            case 1:
+                jTabbedPane1.setSelectedIndex(1);
+//                jTableEmployee.setModel(new ListStaffTableModel(listadeempleados));
+//                jTableEmployee.getColumnModel().getColumn(3).setCellRenderer(new Dates());
+                break;
+            case 2:
+                jTabbedPane1.setSelectedIndex(2);
+                jTableProducts.setModel(new ListProductsTableModel(listadeproductos));
+//                jTableProducts.getColumnModel().getColumn(6).setCellRenderer(new Colour());
+//                jTableProducts.getColumnModel().getColumn(9).setCellRenderer(new Price());
+                break;
+            case 3:
+                jTabbedPane1.setSelectedIndex(3);
+                jTableStock.setModel(new ListStockTableModel(listadestocks));
+        
+        }
+            
+            
+    }//GEN-LAST:event_jListTableValueChanged
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
+
+    }//GEN-LAST:event_jTabbedPane1AncestorAdded
+    
+    
     private void windowsClosing(){
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -578,6 +737,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogManagerConections;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList jListConnections;
+    private javax.swing.JList jListTable;
     private javax.swing.JMenuBar jMenuBarmenu;
     private javax.swing.JMenu jMenuConections;
     private javax.swing.JMenu jMenuDataBase;
@@ -603,6 +763,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuTools;
     private javax.swing.JMenu jMenuView;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -612,6 +773,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -623,7 +788,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPanemenuRibbon;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableEmployee;
+    private javax.swing.JTable jTableProducts;
+    private javax.swing.JTable jTableShops;
+    private javax.swing.JTable jTableStock;
     private javax.swing.JToolBar jToolBarRibbon;
     // End of variables declaration//GEN-END:variables
 }
