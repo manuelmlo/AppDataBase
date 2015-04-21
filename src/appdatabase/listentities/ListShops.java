@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author Manuel Manzano López
  */
 public class ListShops {
+    private final String [] HEAD= new Shop().getHead();
     private final String NAME="Tiendas";
     private ArrayList<Shop> listShop;
     
@@ -50,10 +51,16 @@ public class ListShops {
     
     private void setDefault(){
         
-        this.addShop(new Shop(1, "Tienda de Ubrique", "C/Avenida de Oria, Nº100, 11600, Ubrique, Cádiz",956460000, "tiendaubrique@gm.com"));
-        this.addShop(new Shop(2,"Tienda de Arcos", "C/Avenida Miguel Mancheño, Nº50, Arcos, Cádiz", 956700000, "tiendaarcos@gm.com"));
+        this.addShop(new Shop(0, "Tienda de Ubrique", "C/Avenida de Oria, Nº100, 11600, Ubrique, Cádiz",956460000, "tiendaubrique@gm.com"));
+        this.addShop(new Shop(1,"Tienda de Arcos", "C/Avenida Miguel Mancheño, Nº50, Arcos, Cádiz", 956700000, "tiendaarcos@gm.com"));
+    }
+    public String[] getHEAD() {
+        return HEAD;
     }
 
+    public String getNAME() {
+        return NAME;
+    }
     public ArrayList<Shop> getListShop() {
         return listShop;
     }

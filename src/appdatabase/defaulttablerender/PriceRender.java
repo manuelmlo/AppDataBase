@@ -5,26 +5,22 @@
  */
 package appdatabase.defaulttablerender;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.text.NumberFormat;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author Manuel Manzano López
  */
-public class Dates extends DefaultTableCellRenderer{
-    
-    public Dates(){
+public class PriceRender extends DefaultTableCellRenderer{
+    public PriceRender(){
         super();
     }
-
+    
     @Override
     protected void setValue(Object value) {
-        value=new Date(System.currentTimeMillis());
-        DateFormat format=DateFormat.getDateInstance();      
+        NumberFormat format= NumberFormat.getCurrencyInstance();
         setText(format.format(value));
     }
-    
     
 }

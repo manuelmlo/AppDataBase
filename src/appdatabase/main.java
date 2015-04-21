@@ -5,9 +5,11 @@
  */
 package appdatabase;
 
-import appdatabase.defaulttablerender.Colour;
-import appdatabase.defaulttablerender.Dates;
-import appdatabase.defaulttablerender.Price;
+import appdatabase.defaulttablerender.ColourRender;
+import appdatabase.defaulttablerender.PriceRender;
+import appdatabase.defaulttablerender.ProductRender;
+import appdatabase.defaulttablerender.ShopRender;
+import appdatabase.defaulttablerender.SpecificationsRender;
 import appdatabase.listentities.ListProducts;
 import appdatabase.listentitiestablemodel.ListShopsTableModel;
 import appdatabase.listentities.ListShops;
@@ -20,27 +22,43 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Manuel Manzano López
  */
 public class main extends javax.swing.JFrame {
+
     ConectServer conectServer;
     ListShops listadeTiendas = new ListShops("Default");
     ListStaff listadeempleados = new ListStaff("Default");
-    ListProducts listadeproductos= new ListProducts("Default");
+    ListProducts listadeproductos = new ListProducts("Default");
     ListStocks listadestocks = new ListStocks("Default");
-            
+
     /**
      * Creates new form main
      */
     public main() {
         initComponents();
+        this.windowsClosing();
         jTableShops.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableShops.setModel(new ListShopsTableModel(listadeTiendas));
         this.repaint();
+        componentShop1.setListShops(listadeTiendas);
+        componentShop1.setVisible(false);
+        componentEmployee1.setListEmployee(listadeempleados.getListStaff());
+        componentEmployee1.setListShop(listadeTiendas);
+        componentEmployee1.setVisible(false);
+        componentProduct1.setListProduct(listadeproductos);
+        componentProduct1.setVisible(false);
+        componentStock1.setListStock(listadestocks);
+        componentStock1.setListShops(listadeTiendas);
+        componentStock1.setListProducts(listadeproductos);
+        componentStock1.setVisible(false);
         
+       
     }
 
     /**
@@ -83,7 +101,13 @@ public class main extends javax.swing.JFrame {
         jTableProducts = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTableStock = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
+        jPanelComponent = new javax.swing.JPanel();
+        jScrollPaneComponent = new javax.swing.JScrollPane();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        componentEmployee1 = new appdatabase.component.ComponentEmployee();
+        componentStock1 = new appdatabase.component.ComponentStock();
+        componentShop1 = new appdatabase.component.ComponentShop();
+        componentProduct1 = new appdatabase.component.ComponentProduct();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListTable = new javax.swing.JList();
         jMenuBarmenu = new javax.swing.JMenuBar();
@@ -331,7 +355,7 @@ public class main extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableShops);
 
-        jTabbedPane1.addTab("tab1", jScrollPane2);
+        jTabbedPane1.addTab("Tiendas", jScrollPane2);
 
         jTableEmployee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -346,7 +370,7 @@ public class main extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(jTableEmployee);
 
-        jTabbedPane1.addTab("tab1", jScrollPane5);
+        jTabbedPane1.addTab("Empleados", jScrollPane5);
 
         jTableProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -361,7 +385,7 @@ public class main extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTableProducts);
 
-        jTabbedPane1.addTab("tab1", jScrollPane4);
+        jTabbedPane1.addTab("Productos", jScrollPane4);
 
         jTableStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -376,19 +400,70 @@ public class main extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(jTableStock);
 
-        jTabbedPane1.addTab("tab1", jScrollPane6);
+        jTabbedPane1.addTab("Stock", jScrollPane6);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelComponent.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addComponent(componentEmployee1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 21, Short.MAX_VALUE))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(componentStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 23, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(componentShop1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 23, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(componentProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 25, Short.MAX_VALUE)))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addComponent(componentEmployee1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 420, Short.MAX_VALUE))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(componentStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 249, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(componentShop1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 261, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(componentProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jLayeredPane1.setLayer(componentEmployee1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(componentStock1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(componentShop1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(componentProduct1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jScrollPaneComponent.setViewportView(jLayeredPane1);
+
+        javax.swing.GroupLayout jPanelComponentLayout = new javax.swing.GroupLayout(jPanelComponent);
+        jPanelComponent.setLayout(jPanelComponentLayout);
+        jPanelComponentLayout.setHorizontalGroup(
+            jPanelComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelComponentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPaneComponent, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelComponentLayout.setVerticalGroup(
+            jPanelComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelComponentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPaneComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jListTable.setModel(new javax.swing.AbstractListModel() {
@@ -396,6 +471,7 @@ public class main extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jListTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListTable.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jListTableValueChanged(evt);
@@ -406,6 +482,11 @@ public class main extends javax.swing.JFrame {
         jMenuFileExit.setText("Archivo");
 
         jMenuItem1.setText("Salir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenuFileExit.add(jMenuItem1);
 
         jMenuBarmenu.add(jMenuFileExit);
@@ -538,43 +619,38 @@ public class main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelStatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(26, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(640, 640, 640))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(10, 10, 10))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanelStatusBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanelComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBarRibbon, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                    .addComponent(jPanelComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addComponent(jPanelStatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -582,18 +658,18 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jToolBarRibbon.isVisible()){
+        if (jToolBarRibbon.isVisible()) {
             jToolBarRibbon.setVisible(false);
             jMenuBarmenu.setVisible(true);
             this.repaint();
-        }else{
+        } else {
             jToolBarRibbon.setVisible(true);
             jMenuBarmenu.setVisible(false);
             jTabbedPanemenuRibbon.setSize(jToolBarRibbon.getSize());
             this.repaint();
             jTableShops.repaint();
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTabbedPanemenuRibbonMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jTabbedPanemenuRibbonMouseWheelMoved
@@ -613,8 +689,8 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemConectionActionPerformed
 
     private void jMenuItemFullScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFullScreenActionPerformed
-       this.setExtendedState(MAXIMIZED_BOTH);
-       
+        this.setExtendedState(MAXIMIZED_BOTH);
+
     }//GEN-LAST:event_jMenuItemFullScreenActionPerformed
 
     private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
@@ -622,7 +698,7 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
     private void jCheckBoxMenuItemOnOffDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemOnOffDataBaseActionPerformed
-       conectServer=new ConectServer(null, null, null, null);
+        conectServer = new ConectServer(null, null, null, null);
     }//GEN-LAST:event_jCheckBoxMenuItemOnOffDataBaseActionPerformed
 
     private void jButtonOKConectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKConectionsActionPerformed
@@ -630,64 +706,162 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonOKConectionsActionPerformed
 
     private void jListTableValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListTableValueChanged
-       
-        switch(jListTable.getSelectedIndex()){
+
+        switch (jListTable.getSelectedIndex()) {
             case 0:
                 jTabbedPane1.setSelectedIndex(0);
                 jTableShops.setModel(new ListShopsTableModel(listadeTiendas));
-                
+                this.setVisible(jListTable.getSelectedIndex());
+                this.addlistenerListShops();
                 break;
             case 1:
                 jTabbedPane1.setSelectedIndex(1);
-//                jTableEmployee.setModel(new ListStaffTableModel(listadeempleados));
-//                jTableEmployee.getColumnModel().getColumn(3).setCellRenderer(new Dates());
+                jTableEmployee.setModel(new ListStaffTableModel(listadeempleados));
+                jTableEmployee.getColumnModel().getColumn(7).setCellRenderer(new ShopRender());
+                this.setVisible(jListTable.getSelectedIndex());
+                this.addlistenerListStaff();
                 break;
             case 2:
                 jTabbedPane1.setSelectedIndex(2);
                 jTableProducts.setModel(new ListProductsTableModel(listadeproductos));
-//                jTableProducts.getColumnModel().getColumn(6).setCellRenderer(new Colour());
-//                jTableProducts.getColumnModel().getColumn(9).setCellRenderer(new Price());
+                jTableProducts.getColumnModel().getColumn(4).setCellRenderer(new SpecificationsRender());
+                jTableProducts.getColumnModel().getColumn(6).setCellRenderer(new ColourRender());
+                jTableProducts.getColumnModel().getColumn(8).setCellRenderer(new PriceRender());
+                this.setVisible(jListTable.getSelectedIndex());
+                this.addlistenerListProduct();
                 break;
             case 3:
                 jTabbedPane1.setSelectedIndex(3);
                 jTableStock.setModel(new ListStockTableModel(listadestocks));
-        
+                jTableStock.getColumnModel().getColumn(0).setCellRenderer(new ShopRender());
+                jTableStock.getColumnModel().getColumn(1).setCellRenderer(new ProductRender());
+                this.setVisible(jListTable.getSelectedIndex());
+                this.addlistenerListStocks();
         }
-            
-            
     }//GEN-LAST:event_jListTableValueChanged
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.close();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
 
     }//GEN-LAST:event_jTabbedPane1AncestorAdded
+    private void setVisible(int num){
+        
+        switch (num) {
+            case 0:
+                componentShop1.setVisible(true);
+                componentEmployee1.setVisible(false);
+                componentProduct1.setVisible(false);
+                componentStock1.setVisible(false);
+                break;
+            case 1:
+                componentShop1.setVisible(false);
+                componentEmployee1.setVisible(true);
+                componentProduct1.setVisible(false);
+                componentStock1.setVisible(false);
+                break;
+            case 2:
+                componentShop1.setVisible(false);
+                componentEmployee1.setVisible(false);
+                componentProduct1.setVisible(true);
+                componentStock1.setVisible(false);
+                break;
+            case 3:
+                componentShop1.setVisible(false);
+                componentEmployee1.setVisible(false);
+                componentProduct1.setVisible(false);
+                componentStock1.setVisible(true);
+                break;
+                
+        
+        }   
+    }
+    private void addlistenerListShops() {
+        jTableShops.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent event) {
+                        if (jTableShops.getSelectedRow() < 0) {
+                            componentShop1.setDefault();
+                        } else {
+                            componentShop1.setElementShop(jTableShops.getSelectedRow());
+                        }
+
+                    }
+                }
+        );
+    }
+    private void addlistenerListStaff() {
+        jTableShops.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent event) {
+                        if (jTableEmployee.getSelectedRow() < 0) {
+                            componentEmployee1.setDefault();
+                        } else {
+                            componentEmployee1.setEmployee(jTableEmployee.getSelectedRow());
+                        }
+
+                    }
+                }
+        );
+    }
+    private void addlistenerListProduct() {
+        jTableShops.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent event) {
+                        if (jTableProducts.getSelectedRow() < 0) {
+                            componentProduct1.setDefault();
+                        } else {
+                            componentProduct1.setProduct(jTableProducts.getSelectedRow());
+                        }
+                    }
+                }
+        );
+    }
     
-    
-    private void windowsClosing(){
+    private void addlistenerListStocks() {
+        jTableShops.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent event) {
+                        if (jTableStock.getSelectedRow() < 0) {
+                            componentStock1.setDefault();
+                        } else {
+                            componentStock1.setStock(jTableStock.getSelectedRow());
+                        }
+                    }
+                }
+        );
+    }
+
+    private void windowsClosing() {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-            
-            public void windowsClosing(WindowEvent evt){
+            @Override
+            public void windowClosing(WindowEvent evt) {
                 close();
             }
-});
+        });
     }
-    
-    private void close(){
+
+    private void close() {
         if (JOptionPane.showConfirmDialog(this, "¿Desea salir?",
-                "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            
-            }else{
-                JOptionPane.showMessageDialog(this, "Los datos se perderán.", "Atención", JOptionPane.ERROR_MESSAGE);
-                System.exit(0);
-            }
+                "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Los datos se perderán.", "Atención", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        } else {
+
+        }
     }
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -724,6 +898,10 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private appdatabase.component.ComponentEmployee componentEmployee1;
+    private appdatabase.component.ComponentProduct componentProduct1;
+    private appdatabase.component.ComponentShop componentShop1;
+    private appdatabase.component.ComponentStock componentStock1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelConections;
     private javax.swing.JButton jButtonDeleteConection;
@@ -736,6 +914,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOnOffDataBase;
     private javax.swing.JDialog jDialogManagerConections;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JList jListConnections;
     private javax.swing.JList jListTable;
     private javax.swing.JMenuBar jMenuBarmenu;
@@ -763,11 +942,11 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuTools;
     private javax.swing.JMenu jMenuView;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelComponent;
     private javax.swing.JPanel jPanelStatusBar;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
@@ -777,6 +956,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPaneComponent;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;

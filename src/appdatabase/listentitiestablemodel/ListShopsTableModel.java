@@ -18,7 +18,7 @@ public class ListShopsTableModel extends AbstractTableModel{
     
     public ListShopsTableModel (ListShops listShops){
         this.arrayListShop=listShops;
-        this.nameColumns=listShops.getShopById(1).getHead();
+        this.nameColumns=arrayListShop.getHEAD();
     }
 
     @Override
@@ -28,15 +28,13 @@ public class ListShopsTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return arrayListShop.getShopById().getHead().length ;
+        return nameColumns.length ;
         
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        System.out.println(rowIndex);
         return arrayListShop.getListShop().get(rowIndex).getShop()[columnIndex];
-//        return arrayListShop.getShopById().getShop()[columnIndex]; 
     }
 
     @Override

@@ -19,23 +19,23 @@ public class ListStaffTableModel extends AbstractTableModel{
     
     public ListStaffTableModel (ListStaff listStaff){
         this.arrayListStaff=listStaff;
-        this.nameColumns=listStaff.getEmployerById(0).getHead();
+        this.nameColumns=listStaff.getHEAD();
     }
 
     @Override
     public int getRowCount() {
-        return arrayListStaff.getSize();
+        return arrayListStaff.getListStaff().size();
     }
 
     @Override
     public int getColumnCount() {
-        return arrayListStaff.getEmployerById(0).getHead().length ;
+        return  nameColumns.length;
         
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return arrayListStaff.getListStaff().get(rowIndex).getEmploye()[columnIndex];
+        return arrayListStaff.getListStaff().get(rowIndex).getEmployee()[columnIndex];
     }
 
     @Override

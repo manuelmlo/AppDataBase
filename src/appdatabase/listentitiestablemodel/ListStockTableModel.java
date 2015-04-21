@@ -19,7 +19,7 @@ public class ListStockTableModel extends AbstractTableModel{
 
     public ListStockTableModel(ListStocks listStocks) {
         this.arrayListProducts = listStocks;
-        this.nameColumns = listStocks.getStockById(0,0).getHead();
+        this.nameColumns = arrayListProducts.getHEAD();
     }
 
     @Override
@@ -29,13 +29,13 @@ public class ListStockTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return arrayListProducts.getStockById(0,0).getHead().length;
+        return nameColumns.length;
 
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return arrayListProducts.getListStock().get(rowIndex).getProduct()[columnIndex];
+        return arrayListProducts.getListStock().get(rowIndex).getStock()[columnIndex];
     }
 
     @Override

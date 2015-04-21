@@ -11,45 +11,46 @@ package appdatabase.entity;
  */
 public class Stock {
     private final String[] HEAD={"Tienda","Producto","Stock"};
-    private Shop codShop;
-    private Product codProduct;
-    private int stock;
+    private Shop Shop;
+    private Product Product;
+    private int stockItem;
     
     public Stock(){
     
     }
     public Stock(Shop codShop, Product codProduct, int stock){
-        this.codShop= codShop;
-        this.codProduct=codProduct;
-        this.stock=stock;
+        this.Shop= codShop;
+        this.Product=codProduct;
+        this.stockItem=stock;
 
     }
 
-    public Shop getCodShop() {
-        return codShop;
+    public Shop getShop() {
+        return Shop;
     }
 
-    public void setCodShop(Shop codShop) {
-        this.codShop = codShop;
+    public void setShop(Shop Shop) {
+        this.Shop = Shop;
     }
 
-    public Product getCodProduct() {
-        return codProduct;
+    public Product getProduct() {
+        return Product;
     }
 
-    public void setCodProduct(Product codProduct) {
-        this.codProduct = codProduct;
+    public void setProduct(Product Product) {
+        this.Product = Product;
     }
 
-    public int getStock() {
-        return stock;
+    public int getStockItem() {
+        return stockItem;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setStockItem(int stockItem) {
+        this.stockItem = stockItem;
     }
-    public Object[] getProduct(){
-        return new Object[]{this.getCodShop(),this.getCodShop(),this.getStock()};
+
+    public Object[] getStock(){
+        return new Object[]{this.getShop(),this.getProduct(),this.getStockItem()};
     }
     
     public String[] getHead(){

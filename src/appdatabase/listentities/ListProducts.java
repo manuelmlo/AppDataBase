@@ -14,6 +14,11 @@ import java.util.ArrayList;
  * @author Manuel Manzano López
  */
 public class ListProducts {
+    private final String [] HEAD= new Product().getHead();
+
+    public String[] getHEAD() {
+        return HEAD;
+    }
     private final String NAME="Productos";
     private ArrayList<Product> listProduct;
     
@@ -39,14 +44,14 @@ public class ListProducts {
     }
     
     public void setDefault(){
-        this.addProduct(new Product(0, "Placa Base 1", "MSI", "Intel", 
-                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.blue, null));
-        this.addProduct(new Product(1, "Placa Base 2", "Gigabyte", "AMD", 
-                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.green, null));
-        this.addProduct(new Product(2, "Placa Base 3", "Asus", "Intel", 
-                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.yellow, null));
-        this.addProduct(new Product(3, "Tarjeta Gráfica", "XFX", "AMD", 
-                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.red, null));
+        this.addProduct(new Product(0, "Placa Base 1", "MSI","X88-M", "Intel", 
+                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.blue, null,90));
+        this.addProduct(new Product(1, "Placa Base 2", "Gigabyte","G88-X", "AMD", 
+                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.green, null,89.9));
+        this.addProduct(new Product(2, "Placa Base 3", "Asus","A78-45", "Intel", 
+                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.yellow, null,75.55));
+        this.addProduct(new Product(3, "Tarjeta Gráfica", "XFX","XFX-R7", "AMD", 
+                new String[]{"Características 1","Caracteristicas 2"}, "La descripción del producto", Color.red, null,129.46));
     }
     public ArrayList<Product> getListProducts() {
         return listProduct;

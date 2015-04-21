@@ -5,25 +5,26 @@
  */
 package appdatabase.defaulttablerender;
 
-import java.awt.Color;
+import java.text.DateFormat;
+import java.util.Date;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author Manuel Manzano López
  */
-public class Colour extends DefaultTableCellRenderer {
+public class DatesRender extends DefaultTableCellRenderer{
     
-    public Colour(){
+    public DatesRender(){
         super();
     }
+
     @Override
-    protected void setValue(Object value){
-        if(value!=null){
-            super.setBackground((Color)value);
-        }else{
-            super.setBackground((Color) value);
-        }
-        
+    protected void setValue(Object value) {
+        value=new Date(System.currentTimeMillis());
+        DateFormat format=DateFormat.getDateInstance();      
+        setText(format.format(value));
     }
+    
+    
 }

@@ -5,7 +5,7 @@
  */
 package appdatabase.entity;
 
-import appdatabase.entity.Shop;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -18,7 +18,7 @@ public class Employee {
     private int codEmploye;
     private String name;
     private String surname;
-    private Date dateBorn;
+    private Calendar dateBorn;
     private String address;
     private int phone;
     private String email;
@@ -97,11 +97,11 @@ public class Employee {
         this.codshop = codshop;
     }
 
-    public Date getDateBorn() {
+    public Calendar getDateBorn() {
         return dateBorn;
     }
 
-    public void setDateBorn(Date dateBorn) {
+    public void setDateBorn(Calendar dateBorn) {
         this.dateBorn = dateBorn;
     }
 
@@ -114,8 +114,8 @@ public class Employee {
     }
     
     
-    public Object[] getEmploye(){
-        return new Object[]{this.getName(),this.getDateBorn(),this.getAddress(),this.getPhone()
+    public Object[] getEmployee(){
+        return new Object[]{this.getName(),this.getSurname(),this.getDateBorn(),this.getAddress(),this.getPhone()
                 ,this.getEmail(),this.isIsmanager(),this.getCodshop()};
     }
     public String[] getHead(){

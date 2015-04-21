@@ -19,7 +19,7 @@ public class ListProductsTableModel extends AbstractTableModel{
     
     public ListProductsTableModel (ListProducts listProducts){
         this.arrayListProducts=listProducts;
-        this.nameColumns=listProducts.getProductById(0).getHead();
+        this.nameColumns=arrayListProducts.getHEAD();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ListProductsTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return arrayListProducts.getProductById(0).getHead().length ;
+        return nameColumns.length ;
         
     }
 

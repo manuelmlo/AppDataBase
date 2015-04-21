@@ -25,24 +25,26 @@ public class Product {
     private String descriptions;
     private Color colour;
     private ArrayList<Image> photos=new ArrayList();
-    private int price;
+    private double price;
 
 
 
     public Product(){
     
     }
-    public Product(int codProduct,String nameProduct,String builder, 
+    public Product(int codProduct,String nameProduct,String builder, String mark,
             String type, String[] specifications,String descriptions, 
-            Color colour, Image photo ){
+            Color colour, Image photo,double price ){
         this.codProduct=codProduct;
         this.nameProduct=nameProduct;
         this.builder=builder;
         this.mark=mark;
         this.type=type;
         this.specifications=specifications;
+        this.descriptions=descriptions;
         this.colour=colour;
         this.setPhotos(photo);
+        this.price=price;
     }
 
     public int getCodProduct() {
@@ -126,7 +128,7 @@ public class Product {
     public void setPhotos(Image photo) {
         this.photos.add(photo);
     }
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

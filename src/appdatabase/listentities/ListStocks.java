@@ -5,7 +5,6 @@
  */
 package appdatabase.listentities;
 
-import appdatabase.listentities.ListShops;
 import appdatabase.entity.Stock;
 import java.util.ArrayList;
 
@@ -14,6 +13,7 @@ import java.util.ArrayList;
  * @author Manuel Manzano López
  */
 public class ListStocks {
+    private final String[] HEAD= new Stock().getHead();
     private final String NAME="Stock";
     private ArrayList<Stock> listStock;
     
@@ -30,8 +30,8 @@ public class ListStocks {
    
     public Stock getStockById(int shop, int product){
         for (Stock listStock1 : listStock) {
-            if (listStock1.getCodShop().getCodShop() == 
-                    shop && listStock1.getCodProduct().getCodProduct() == product) {
+            if (listStock1.getShop().getCodShop() == 
+                    shop && listStock1.getProduct().getCodProduct() == product) {
                 return listStock1;
             }
         }
@@ -45,6 +45,15 @@ public class ListStocks {
         this.addStock(new Stock(new ListShops("Default").getShopById(0),new ListProducts("Default").getProductById(2), 6));
         this.addStock(new Stock(new ListShops("Default").getShopById(1),new ListProducts("Default").getProductById(2), 2));
     }
+
+    public String[] getHEAD() {
+        return HEAD;
+    }
+
+    public String getNAME() {
+        return NAME;
+    }
+    
     public ArrayList<Stock> getListStock() {
         return listStock;
     }

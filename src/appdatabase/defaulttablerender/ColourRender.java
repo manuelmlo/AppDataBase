@@ -5,22 +5,27 @@
  */
 package appdatabase.defaulttablerender;
 
-import java.text.NumberFormat;
+import java.awt.Color;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author Manuel Manzano López
  */
-public class Price extends DefaultTableCellRenderer{
-    public Price(){
+public class ColourRender extends DefaultTableCellRenderer {
+    
+    public ColourRender(){
         super();
     }
-    
     @Override
-    protected void setValue(Object value) {
-        NumberFormat format= NumberFormat.getCurrencyInstance();
-        setText(format.format(value));
+    protected void setValue(Object value){
+        if(value!=null){
+            super.setBackground((Color) value);
+        }else{
+            super.setBackground(Color.white);
+        }
+        
     }
+    
     
 }
