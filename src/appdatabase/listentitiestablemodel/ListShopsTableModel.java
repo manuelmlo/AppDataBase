@@ -5,6 +5,7 @@
  */
 package appdatabase.listentitiestablemodel;
 
+import appdatabase.entity.Shop;
 import appdatabase.listentities.ListShops;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,6 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class ListShopsTableModel extends AbstractTableModel{
     private ListShops arrayListShop;
     private final String[] nameColumns;
+    private Shop shop;
     
     public ListShopsTableModel (ListShops listShops){
         this.arrayListShop=listShops;
@@ -46,6 +48,33 @@ public class ListShopsTableModel extends AbstractTableModel{
     public void setArrayList(ListShops listShops){
         this.arrayListShop= listShops;
     }
-    
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+       return true;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        
+        switch(columnIndex){
+            case 0:
+                shop.setNameShop((String)aValue);
+               break;
+            case 1:
+                shop.setAddress((String)aValue);
+                break;
+            case 2:
+                shop.setPhone(Integer.valueOf((String)aValue));
+                break;
+            case 3:
+                shop.setEmail((String)aValue);
+                break;
+            default:       
+        }  
+    }
+    private void setShop(int numShop){
+        shop=arrayListShop.getListShop().get(numShop);
+    }
     
 }

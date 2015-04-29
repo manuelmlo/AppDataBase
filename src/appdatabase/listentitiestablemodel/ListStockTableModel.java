@@ -5,6 +5,7 @@
  */
 package appdatabase.listentitiestablemodel;
 
+import appdatabase.entity.Stock;
 import appdatabase.listentities.ListStocks;
 import javax.swing.table.AbstractTableModel;
 
@@ -16,6 +17,7 @@ public class ListStockTableModel extends AbstractTableModel{
 
     private ListStocks arrayListProducts;
     private final String[] nameColumns;
+    private Stock stock;
 
     public ListStockTableModel(ListStocks listStocks) {
         this.arrayListProducts = listStocks;
@@ -46,4 +48,35 @@ public class ListStockTableModel extends AbstractTableModel{
     public void setArrayList(ListStocks listStocksProducts) {
         this.arrayListProducts = listStocksProducts;
     }
+    
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+       switch(columnIndex){
+//           case 0:
+//               
+//           case 1:
+               
+           case 2:
+               this.stock.setStockItem(Integer.valueOf((String)aValue));
+           default:
+    
+       }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        switch(columnIndex){
+            case 2:
+                return true;
+            default:
+                return false;          
+        }
+    }
+    
+    public void setStock(int numStock){
+        this.stock= arrayListProducts.getListStock().get(numStock);
+    }
+    
+    
 }

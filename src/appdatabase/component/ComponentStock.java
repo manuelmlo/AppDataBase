@@ -8,11 +8,13 @@ package appdatabase.component;
 import appdatabase.entity.Product;
 import appdatabase.entity.Shop;
 import appdatabase.entity.Stock;
+import appdatabase.listcellrender.ListRenderProducts;
+import appdatabase.listcellrender.ListRenderShops;
 import appdatabase.listentities.ListProducts;
 import appdatabase.listentities.ListShops;
 import appdatabase.listentities.ListStocks;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
@@ -22,18 +24,22 @@ import javax.swing.JComboBox;
  */
 public class ComponentStock extends javax.swing.JPanel {
     
-    private ArrayList<Shop> listShops;
-    private ArrayList<Product> listProducts;
-    private ArrayList<Stock> listStock;
+    private List<Shop> listShops;
+    private List<Product> listProducts;
+    private List<Stock> listStock;
     private Stock stock;
     private Shop shop;
     private Product product;
+    private int numElementStock;
+    private int numElementShop;
+    private int numElementProduct;
 
     /**
      * Creates new form ComponentStock
      */
     public ComponentStock() {
         initComponents();
+        this.setDefault();
     }
     public ComponentStock(ListStocks listStock,ListShops listShops,ListProducts listProduct){
         
@@ -41,11 +47,10 @@ public class ComponentStock extends javax.swing.JPanel {
         this.setListStock(listStock);
         this.setListProducts(listProduct);
         this.setListShops(listShops);
-        this.setDefault();
     
     }
     
-    public ArrayList<Shop> getListShops() {
+    public List<Shop> getListShops() {
         return listShops;
     }
     
@@ -55,34 +60,17 @@ public class ComponentStock extends javax.swing.JPanel {
 
     public void setListShops(ListShops listShops) {
         this.listShops = listShops.getListShop();
-        Object[] tmp=null;
-        for(int i=0; i<this.listShops.size();i++){
-            tmp[i]=this.listShops.get(i).getNameShop();
-        }
-        this.jComboBoxListShops.setModel(new DefaultComboBoxModel(tmp));
-        int aux=-1;
-        do{
-            aux++;
-        }while(this.shop!=this.listShops.get(aux));
-        this.jComboBoxListShops.setSelectedIndex(aux);
+        this.jComboBoxListShops.setModel(new DefaultComboBoxModel(this.listShops.toArray()));
+        
     }
 
-    public ArrayList<Product> getListProducts() {
+    public List<Product> getListProducts() {
         return listProducts;
     }
 
     public void setListProducts(ListProducts listProducts) {
         this.listProducts = listProducts.getListProducts();
-        Object[] tmp=null;
-        for(int i=0; i<this.listProducts.size();i++){
-            tmp[i]=this.listProducts.get(i).getNameProduct();
-        }
-        this.jComboBoxListProducts.setModel(new DefaultComboBoxModel(tmp));
-        int aux=-1;
-        do{
-            aux++;
-        }while(this.product!=this.listProducts.get(aux));
-        this.jComboBoxListProducts.setSelectedIndex(aux);
+        this.jComboBoxListProducts.setModel(new DefaultComboBoxModel(this.listProducts.toArray()));
     }
 
     public JComboBox getjComboBoxShop() {
@@ -92,6 +80,7 @@ public class ComponentStock extends javax.swing.JPanel {
     public void setShop(int numshop) {
         
         this.shop=listShops.get(numshop);
+        
     }
 
     public JComboBox getjComboProduct() {
@@ -99,7 +88,8 @@ public class ComponentStock extends javax.swing.JPanel {
     }
 
     public void setProduct(int numproduct) {
-           this.product=listProducts.get(numproduct);
+        this.numElementStock=numproduct;
+        
     }
 
     public double getUnits() {
@@ -108,22 +98,27 @@ public class ComponentStock extends javax.swing.JPanel {
 
     public void setUnits(int units) {
         if(units>0){
-            DecimalFormat format= new DecimalFormat("# Unidades");
-            this.jTextFieldUnits.setText(format.format(units));
+//            DecimalFormat format= new DecimalFormat("# Unidades");
+//            this.jTextFieldUnits.setText(format.format(units));
+            this.jTextFieldUnits.setText(String.valueOf(units));
         }else{
              this.jTextFieldUnits.setText("No hay Stock");
         }
-        
+        repaint();
     }
-    public void setStock(int numStock){
+    public void setElementStock(int numStock){
         this.stock=this.listStock.get(numStock);
-        
+        this.setUnits(this.stock.getStockItem());
     }
+    
     
     public void setDefault(){
         jComboBoxListProducts.setSelectedIndex(-1);
         jComboBoxListShops.setSelectedIndex(-1);
         jTextFieldUnits.setText("No hay unidades");
+        this.jComboBoxListShops.setRenderer(new ListRenderShops() );
+        this.jComboBoxListProducts.setRenderer(new ListRenderProducts());
+        // Introducir Decimal Render;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,12 +129,17 @@ public class ComponentStock extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jComboBoxListShops = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
+        jComboBoxListProducts = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldUnits = new javax.swing.JTextField();
-        jComboBoxListShops = new javax.swing.JComboBox();
-        jComboBoxListProducts = new javax.swing.JComboBox();
+        jToggleButtonSelectModify = new javax.swing.JToggleButton();
+        jButtonSave = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
 
         jLabel1.setText("Tienda:");
 
@@ -147,24 +147,24 @@ public class ComponentStock extends javax.swing.JPanel {
 
         jLabel3.setText("Unidades:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldUnits, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxListShops, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxListProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -177,17 +177,106 @@ public class ComponentStock extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jTextFieldUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+
+        jScrollPane1.setViewportView(jPanel1);
+
+        jToggleButtonSelectModify.setText("Consultar");
+        jToggleButtonSelectModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonSelectModifyActionPerformed(evt);
+            }
+        });
+
+        jButtonSave.setText("Guardar");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
+
+        jButtonDelete.setText("Eliminar");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jToggleButtonSelectModify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonSave)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDelete)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSave)
+                    .addComponent(jButtonDelete)
+                    .addComponent(jToggleButtonSelectModify))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jToggleButtonSelectModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonSelectModifyActionPerformed
+        if(jToggleButtonSelectModify.isSelected()){
+            this.actionModify();
+        }else{
+
+            this.actionSelect();
+
+        }
+    }//GEN-LAST:event_jToggleButtonSelectModifyActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        listStock.add(numElementStock, stock);
+        listStock.remove(numElementStock+1);
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        this.listStock.remove(this.numElementStock);
+        this.setDefault();
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
+    private void actionSelect(){
+        jToggleButtonSelectModify.setText("Consultar");
+        jToggleButtonSelectModify.setSelected(false);
+        this.jButtonSave.setEnabled(false);
+        this.jButtonDelete.setEnabled(true);
+    }
+    private void actionModify(){
+        jToggleButtonSelectModify.setText("Modificar");
+        jToggleButtonSelectModify.setSelected(true);
+        this.jButtonSave.setEnabled(true);
+        this.jButtonDelete.setEnabled(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonSave;
     private javax.swing.JComboBox jComboBoxListProducts;
     private javax.swing.JComboBox jComboBoxListShops;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldUnits;
+    private javax.swing.JToggleButton jToggleButtonSelectModify;
     // End of variables declaration//GEN-END:variables
 }

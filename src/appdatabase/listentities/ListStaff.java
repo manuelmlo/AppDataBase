@@ -8,6 +8,7 @@ package appdatabase.listentities;
 import appdatabase.entity.Employee;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -17,7 +18,7 @@ public class ListStaff {
 
     private final String[] HEAD = new Employee().getHead();
     private final String NAME = "Empleados";
-    private ArrayList<Employee> liststaff;
+    private List<Employee> liststaff;
 
     public ListStaff() {
         liststaff = new ArrayList();
@@ -61,7 +62,7 @@ public class ListStaff {
         return NAME;
     }
 
-    public ArrayList<Employee> getListStaff() {
+    public List<Employee> getListStaff() {
         return liststaff;
     }
 
