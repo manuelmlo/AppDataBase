@@ -5,9 +5,9 @@
  */
 package appdatabase.listentitiestablemodel;
 
-import appdatabase.entity.Employee;
 import appdatabase.listentities.ListStaff;
-import java.util.Calendar;
+import entitiesDataBase.Staff;
+import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -18,7 +18,7 @@ public class ListStaffTableModel extends AbstractTableModel{
     
     private ListStaff arrayListStaff;
     private final String[] nameColumns;
-    private Employee employee;
+    private Staff employee;
     
     
     public ListStaffTableModel (ListStaff listStaff){
@@ -68,23 +68,23 @@ public class ListStaffTableModel extends AbstractTableModel{
         
         switch(columnIndex){
             case 0:
-                employee.setName((String)aValue);
+                employee.setNameEmployer((String)aValue);
                break;
             case 1:
-                employee.setSurname((String)aValue);
+                employee.setSurNameEmployer((String)aValue);
             case 2:
-                employee.setDateBorn((Calendar)aValue);
+                employee.setDateBorn((Date)aValue);
                 break;
             case 3:
                 employee.setAddress((String)aValue);
             case 4:
-                employee.setPhone(Integer.valueOf((String)aValue));
+                employee.setTelephone((String)aValue);
                 break;
             case 5:
                 employee.setEmail((String)aValue);
                 break;
             case 6:
-                employee.setIsmanager((Boolean)aValue);
+                employee.setIsBoss((Boolean)aValue);
             default:
                 
         }

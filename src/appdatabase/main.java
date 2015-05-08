@@ -18,8 +18,11 @@ import appdatabase.listentities.ListStocks;
 import appdatabase.listentitiestablemodel.ListProductsTableModel;
 import appdatabase.listentitiestablemodel.ListStaffTableModel;
 import appdatabase.listentitiestablemodel.ListStockTableModel;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -35,13 +38,17 @@ import javax.swing.event.ListSelectionListener;
 public class main extends javax.swing.JFrame {
 
     ConectServer conectServer;
-    ListShops listadeTiendas = new ListShops("Default");
+    ListShops listadeTiendas = new ListShops();
     ListStaff listadeempleados = new ListStaff("Default");
     ListProducts listadeproductos = new ListProducts("Default");
     ListStocks listadestocks = new ListStocks("Default");
-    static EntityManager entityManager;
-    Query query;
-
+    public static EntityManager entityManager;
+    public Query query;
+    public ListShopsTableModel modelTableShops = new ListShopsTableModel(listadeTiendas);
+    public ListProductsTableModel modelTableProducts = new ListProductsTableModel(listadeproductos);
+    public ListStaffTableModel modelTableStaff = new ListStaffTableModel(listadeempleados);
+    public ListStockTableModel modelTableStocks = new ListStockTableModel(listadestocks);
+    
     /**
      * Creates new form main
      */
@@ -49,17 +56,17 @@ public class main extends javax.swing.JFrame {
         initComponents();
         this.windowsClosing();
         this.setDefaultMain();
-//        this.setConectionsDB();
-
+        this.setConectionsDB();
     }
 
     private void setConectionsDB() {
         entityManager = Persistence.createEntityManagerFactory("AppDataBasePU").createEntityManager();
         query = entityManager.createNamedQuery("Shops.findAll");
         listadeTiendas.setListShop(query.getResultList());
+        componentShop1.setListShops(listadeTiendas);
     }
 
-    private void  setDefaultMain(){
+    private void setDefaultMain() {
         jTableShops.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableProducts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -103,11 +110,11 @@ public class main extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanelStatusBar = new javax.swing.JPanel();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        jLabelstatusConections = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableShops = new javax.swing.JTable();
@@ -126,7 +133,6 @@ public class main extends javax.swing.JFrame {
         componentEmployee1 = new appdatabase.component.ComponentEmployee();
         componentProduct1 = new appdatabase.component.ComponentProduct();
         componentShop1 = new appdatabase.component.ComponentShop();
-        jButtonConectBD = new javax.swing.JButton();
         jMenuBarmenu = new javax.swing.JMenuBar();
         jMenuFileExit = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -308,13 +314,6 @@ public class main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jCheckBox1.setText("jCheckBox1");
 
         jPanelStatusBar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -323,33 +322,28 @@ public class main extends javax.swing.JFrame {
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jLabelstatusConections.setOpaque(true);
+
         javax.swing.GroupLayout jPanelStatusBarLayout = new javax.swing.GroupLayout(jPanelStatusBar);
         jPanelStatusBar.setLayout(jPanelStatusBarLayout);
         jPanelStatusBarLayout.setHorizontalGroup(
             jPanelStatusBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStatusBarLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addComponent(jLabelstatusConections, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 719, Short.MAX_VALUE)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(126, 126, 126))
         );
         jPanelStatusBarLayout.setVerticalGroup(
             jPanelStatusBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator5, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+            .addComponent(jSeparator5, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(jSeparator6)
+            .addComponent(jLabelstatusConections, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTabbedPane1AncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jTabbedPane1StateChanged(evt);
@@ -459,13 +453,6 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButtonConectBD.setText("Conectar Base Datos");
-        jButtonConectBD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConectBDActionPerformed(evt);
-            }
-        });
-
         jMenuFileExit.setText("Archivo");
 
         jMenuItem1.setText("Salir");
@@ -522,11 +509,6 @@ public class main extends javax.swing.JFrame {
 
         jRadioButtonMenuItem2.setSelected(true);
         jRadioButtonMenuItem2.setText("Ocultar Barra de Estado");
-        jRadioButtonMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonMenuItem2ActionPerformed(evt);
-            }
-        });
         jMenuView.add(jRadioButtonMenuItem2);
         jMenuView.add(jSeparator8);
 
@@ -573,12 +555,6 @@ public class main extends javax.swing.JFrame {
         });
         jMenuDataBase.add(jCheckBoxMenuItemOnOffDataBase);
         jMenuDataBase.add(jSeparator3);
-
-        jMenuItemConection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemConectionActionPerformed(evt);
-            }
-        });
         jMenuDataBase.add(jMenuItemConection);
         jMenuDataBase.add(jSeparator4);
 
@@ -599,30 +575,24 @@ public class main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelStatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButtonConectBD))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 18, Short.MAX_VALUE))))
+                        .addGap(0, 18, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanelStatusBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonConectBD)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -634,37 +604,14 @@ public class main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        if (jToolBarRibbon.isVisible()) {
-//            jToolBarRibbon.setVisible(false);
-//            jMenuBarmenu.setVisible(true);
-//            this.repaint();
-//        } else {
-//            jToolBarRibbon.setVisible(true);
-//            jMenuBarmenu.setVisible(false);
-//            jTabbedPanemenuRibbon.setSize(jToolBarRibbon.getSize());
-//            this.repaint();
-//            jTableShops.repaint();
-//        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTabbedPanemenuRibbonMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jTabbedPanemenuRibbonMouseWheelMoved
 
     }//GEN-LAST:event_jTabbedPanemenuRibbonMouseWheelMoved
-
-    private void jMenuItemConectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConectionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemConectionActionPerformed
 
     private void jMenuItemFullScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFullScreenActionPerformed
         this.setExtendedState(MAXIMIZED_BOTH);
 
     }//GEN-LAST:event_jMenuItemFullScreenActionPerformed
-
-    private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
     private void jCheckBoxMenuItemOnOffDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemOnOffDataBaseActionPerformed
         conectServer = new ConectServer(null, null, null, null);
@@ -676,37 +623,7 @@ public class main extends javax.swing.JFrame {
 
     private void jListTableValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListTableValueChanged
 
-        switch (jListTable.getSelectedIndex()) {
-            case 0:
-                jTabbedPane1.setSelectedIndex(jListTable.getSelectedIndex());
-                this.setVisibleTab(jListTable.getSelectedIndex());
-                jTableShops.setModel(new ListShopsTableModel(listadeTiendas));
-                this.addlistenerListShops();
-                break;
-            case 1:
-                jTabbedPane1.setSelectedIndex(1);
-                this.setVisibleTab(jListTable.getSelectedIndex());
-                jTableEmployee.setModel(new ListStaffTableModel(listadeempleados));
-                jTableEmployee.getColumnModel().getColumn(7).setCellRenderer(new ShopRender());
-                this.addlistenerListStaff();
-                break;
-            case 2:
-                jTabbedPane1.setSelectedIndex(2);
-                this.setVisibleTab(jListTable.getSelectedIndex());
-                jTableProducts.setModel(new ListProductsTableModel(listadeproductos));
-                jTableProducts.getColumnModel().getColumn(4).setCellRenderer(new SpecificationsRender());
-                jTableProducts.getColumnModel().getColumn(6).setCellRenderer(new ColourRender());
-                jTableProducts.getColumnModel().getColumn(8).setCellRenderer(new PriceRender());
-                this.addlistenerListProduct();
-                break;
-            case 3:
-                jTabbedPane1.setSelectedIndex(3);
-                this.setVisibleTab(jListTable.getSelectedIndex());
-                jTableStock.setModel(new ListStockTableModel(listadestocks));
-                jTableStock.getColumnModel().getColumn(0).setCellRenderer(new ShopRender());
-                jTableStock.getColumnModel().getColumn(1).setCellRenderer(new ProductRender());
-                this.addlistenerListStocks();
-        }
+        this.stateChangeTab(jListTable.getSelectedIndex());
     }//GEN-LAST:event_jListTableValueChanged
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -714,16 +631,51 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-
+        this.stateChangeTab(jTabbedPane1.getSelectedIndex());
+        this.setTitle("");
+        this.setTitle("Tabla: "+jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
     }//GEN-LAST:event_jTabbedPane1StateChanged
-
-    private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
-
-    }//GEN-LAST:event_jTabbedPane1AncestorAdded
-
-    private void jButtonConectBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConectBDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonConectBDActionPerformed
+    private void stateChangeTab(int num){
+        switch (num) {
+            case 0:
+                jTabbedPane1.setSelectedIndex(num);
+                this.setVisibleTab(num);
+                this.setVisibleTab(jListTable.getSelectedIndex());
+                this.setTableBD(jListTable.getSelectedIndex());
+                this.componentShop1.setEditable(false);
+                jTableShops.setModel(modelTableShops);
+                this.addlistenerListShops();
+                break;
+            case 1:
+                jTabbedPane1.setSelectedIndex(num);
+                this.setVisibleTab(num);
+                this.setVisibleTab(jListTable.getSelectedIndex());
+                componentEmployee1.setListShop(listadeTiendas);
+                jTableEmployee.setModel(modelTableStaff);
+                jTableEmployee.getColumnModel().getColumn(7).setCellRenderer(new ShopRender());
+                this.addlistenerListStaff();
+                break;
+            case 2:
+                jTabbedPane1.setSelectedIndex(num);
+                this.setVisibleTab(num);
+                this.setVisibleTab(jListTable.getSelectedIndex());
+                jTableProducts.setModel(modelTableProducts);
+                jTableProducts.getColumnModel().getColumn(4).setCellRenderer(new SpecificationsRender());
+                jTableProducts.getColumnModel().getColumn(6).setCellRenderer(new ColourRender());
+                jTableProducts.getColumnModel().getColumn(8).setCellRenderer(new PriceRender());
+                this.addlistenerListProduct();
+                break;
+            case 3:
+                jTabbedPane1.setSelectedIndex(num);
+                this.setVisibleTab(num);
+                this.setVisibleTab(jListTable.getSelectedIndex());
+                jTableStock.setModel(modelTableStocks);
+                jTableStock.getColumnModel().getColumn(0).setCellRenderer(new ShopRender());
+                jTableStock.getColumnModel().getColumn(1).setCellRenderer(new ProductRender());
+                this.addlistenerListStocks();
+        }
+    }
+    
     private void setVisibleTab(int num) {
 
         switch (num) {
@@ -754,6 +706,24 @@ public class main extends javax.swing.JFrame {
 
         }
     }
+    
+    private void setTableBD(int num){
+        switch (num){
+            case 0:
+                this.query =entityManager.createNamedQuery("Shops.findAll");
+                this.listadeTiendas.setListShop(query.getResultList());
+                componentShop1.setListShops(listadeTiendas);
+                
+            break;
+            case 1:
+            break;
+            case 2:
+            break;
+            case 3:
+            break;       
+            default:
+        }
+    }
 
     private void addlistenerListShops() {
         jTableShops.getSelectionModel().addListSelectionListener(
@@ -770,6 +740,7 @@ public class main extends javax.swing.JFrame {
                 }
         );
     }
+
     private void addlistenerListStaff() {
         jTableShops.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -784,6 +755,7 @@ public class main extends javax.swing.JFrame {
                 }
         );
     }
+
     private void addlistenerListProduct() {
         jTableShops.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -798,7 +770,7 @@ public class main extends javax.swing.JFrame {
                 }
         );
     }
-    
+
     private void addlistenerListStocks() {
         jTableShops.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -813,7 +785,32 @@ public class main extends javax.swing.JFrame {
                 }
         );
     }
+    
+    public static void updateTable(int num){
+         
+    }
+    private void updateTable(){
 
+    }
+    private void statusConections(){
+        
+        do{
+            try {
+                if(entityManager.isOpen()){
+                    jLabelstatusConections.setBackground(Color.green);
+                }else{
+                    jLabelstatusConections.setBackground(Color.red);
+                }
+                this.repaint();
+                Thread.sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }while(entityManager.isOpen());
+    
+    }
+   
     private void windowsClosing() {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -828,6 +825,7 @@ public class main extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(this, "¿Desea salir?",
                 "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Los datos se perderán.", "Atención", JOptionPane.ERROR_MESSAGE);
+            entityManager.close();
             System.exit(0);
         } else {
 
@@ -863,6 +861,7 @@ public class main extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new main().setVisible(true);
             }
@@ -874,9 +873,7 @@ public class main extends javax.swing.JFrame {
     private appdatabase.component.ComponentProduct componentProduct1;
     private appdatabase.component.ComponentShop componentShop1;
     private appdatabase.component.ComponentStock componentStock1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelConections;
-    private javax.swing.JButton jButtonConectBD;
     private javax.swing.JButton jButtonDeleteConection;
     private javax.swing.JButton jButtonModifyConection;
     private javax.swing.JButton jButtonNewConection;
@@ -887,6 +884,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOnOffDataBase;
     private javax.swing.JDialog jDialogManagerConections;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelstatusConections;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JList jListConnections;
     private javax.swing.JList jListTable;

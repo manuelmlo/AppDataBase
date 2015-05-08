@@ -5,7 +5,6 @@
  */
 package appdatabase.component;
 
-import appdatabase.defaulttablerender.ShopRender;
 import appdatabase.entity.Employee;
 import appdatabase.entity.Shop;
 import appdatabase.format.MaxLenghtString;
@@ -13,7 +12,7 @@ import appdatabase.format.Values;
 import appdatabase.listcellrender.ListRenderShops;
 import appdatabase.listentities.ListShops;
 import appdatabase.listentities.ListStaff;
-import java.util.ArrayList;
+import entitiesDataBase.Shops;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -26,8 +25,8 @@ import javax.swing.JComboBox;
 public class ComponentEmployee extends javax.swing.JPanel {
     private List<Employee> listEmployee;
     private Employee employee;
-    private Shop shop;
-    private List<Shop> listShops;
+    private Shops shops;
+    private List<Shops> listShops;
     private int numElementEmployee;
     private int numElementShop;
 
@@ -69,12 +68,12 @@ public class ComponentEmployee extends javax.swing.JPanel {
         this.buttonGroupIsManager.setSelected(jRadioButtonBoss.getModel(), type);
     }
 
-    public Calendar getjDateChooserBornDate() {
-        return jDateChooserBornDate.getCalendar();
+    public Calendar getjDateChooserDateBirth() {
+        return jDateChooserDateBirth.getCalendar();
     }
 
-    public void setBornDate(Calendar jDateChooserBornDate) {
-        this.jDateChooserBornDate.setCalendar(jDateChooserBornDate);
+    public void setDateBirth(Calendar jDateChooserBornDate) {
+        this.jDateChooserDateBirth.setCalendar(jDateChooserBornDate);
     }
 
     public String getAddress() {
@@ -125,15 +124,15 @@ public class ComponentEmployee extends javax.swing.JPanel {
         this.jComboBoxListShops = jComboBoxListShops;
     }
 
-    public Shop getShop() {
-        return shop;
+    public Shops getShop() {
+        return shops;
     }
 
     public void setShop(Shop shop) {
-        this.shop = shop;
+        this.shops = shops;
     }
 
-    public List<Shop> getListShop() {
+    public List<Shops> getListShop() {
         return listShops;
     }
 
@@ -149,7 +148,7 @@ public class ComponentEmployee extends javax.swing.JPanel {
         this.setName(this.employee.getName());
         this.setSurname(this.employee.getSurname());
         this.setAddress(this.employee.getAddress());
-        this.setBornDate(this.employee.getDateBorn());
+        this.setDateBirth(this.employee.getDateBorn());
         this.setEmail(this.employee.getEmail());
         this.jRadioButtonBoss.setEnabled(true);
         this.jRadioButtonEmployee.setEnabled(true);
@@ -165,7 +164,7 @@ public class ComponentEmployee extends javax.swing.JPanel {
         this.setAddress("No hay un emplado selecionado");
         Calendar time= Calendar.getInstance();
         time.setTimeInMillis(System.currentTimeMillis());
-        this.setBornDate(time);
+        this.setDateBirth(time);
         this.setEmail("No hay un empleado selecionado");
         this.jRadioButtonBoss.setEnabled(false);
         this.jRadioButtonEmployee.setEnabled(false);
@@ -184,6 +183,9 @@ public class ComponentEmployee extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroupIsManager = new javax.swing.ButtonGroup();
+        jToggleButtonSelectModify = new javax.swing.JToggleButton();
+        jButtonSave = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -198,14 +200,34 @@ public class ComponentEmployee extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldAddress = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jDateChooserBornDate = new com.toedter.calendar.JDateChooser();
+        jDateChooserDateBirth = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldSurname = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldname = new javax.swing.JTextField();
-        jToggleButtonSelectModify = new javax.swing.JToggleButton();
-        jButtonSave = new javax.swing.JButton();
-        jButtonDelete = new javax.swing.JButton();
+
+        jToggleButtonSelectModify.setText("Consultar");
+        jToggleButtonSelectModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonSelectModifyActionPerformed(evt);
+            }
+        });
+
+        jButtonSave.setText("Guardar");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
+
+        jButtonDelete.setText("Eliminar");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setText("Nombre:");
 
@@ -242,7 +264,7 @@ public class ComponentEmployee extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addComponent(jTextFieldSurname)
                         .addComponent(jLabel3)
-                        .addComponent(jDateChooserBornDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDateChooserDateBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addComponent(jTextFieldAddress)
                         .addComponent(jLabel5)
@@ -272,7 +294,7 @@ public class ComponentEmployee extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooserBornDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDateChooserDateBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,42 +322,21 @@ public class ComponentEmployee extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(jPanel1);
 
-        jToggleButtonSelectModify.setText("Consultar");
-        jToggleButtonSelectModify.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonSelectModifyActionPerformed(evt);
-            }
-        });
-
-        jButtonSave.setText("Guardar");
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-
-        jButtonDelete.setText("Eliminar");
-        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDeleteActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToggleButtonSelectModify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonSave)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDelete)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jToggleButtonSelectModify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSave)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonDelete)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -347,7 +348,7 @@ public class ComponentEmployee extends javax.swing.JPanel {
                     .addComponent(jButtonDelete)
                     .addComponent(jToggleButtonSelectModify))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -389,7 +390,7 @@ public class ComponentEmployee extends javax.swing.JPanel {
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JComboBox jComboBoxListShops;
-    private com.toedter.calendar.JDateChooser jDateChooserBornDate;
+    private com.toedter.calendar.JDateChooser jDateChooserDateBirth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

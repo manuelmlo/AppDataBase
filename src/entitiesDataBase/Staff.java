@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Manuel Manzano López
+ * @author Manuel
  */
 @Entity
 @Table(name = "staff")
@@ -35,11 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Staff.findByNameEmployer", query = "SELECT s FROM Staff s WHERE s.nameEmployer = :nameEmployer"),
     @NamedQuery(name = "Staff.findBySurNameEmployer", query = "SELECT s FROM Staff s WHERE s.surNameEmployer = :surNameEmployer"),
     @NamedQuery(name = "Staff.findByDateBorn", query = "SELECT s FROM Staff s WHERE s.dateBorn = :dateBorn"),
-    @NamedQuery(name = "Staff.findByDni", query = "SELECT s FROM Staff s WHERE s.dni = :dni"),
     @NamedQuery(name = "Staff.findByAddress", query = "SELECT s FROM Staff s WHERE s.address = :address"),
-    @NamedQuery(name = "Staff.findByCp", query = "SELECT s FROM Staff s WHERE s.cp = :cp"),
     @NamedQuery(name = "Staff.findByTelephone", query = "SELECT s FROM Staff s WHERE s.telephone = :telephone"),
-    @NamedQuery(name = "Staff.findByEmail", query = "SELECT s FROM Staff s WHERE s.email = :email")})
+    @NamedQuery(name = "Staff.findByEmail", query = "SELECT s FROM Staff s WHERE s.email = :email"),
+    @NamedQuery(name = "Staff.findByIsBoss", query = "SELECT s FROM Staff s WHERE s.isBoss = :isBoss")})
 public class Staff implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,16 +53,14 @@ public class Staff implements Serializable {
     @Column(name = "DateBorn")
     @Temporal(TemporalType.DATE)
     private Date dateBorn;
-    @Column(name = "DNI")
-    private String dni;
     @Column(name = "Address")
     private String address;
-    @Column(name = "Cp")
-    private String cp;
     @Column(name = "Telephone")
     private String telephone;
     @Column(name = "Email")
     private String email;
+    @Column(name = "IsBoss")
+    private Boolean isBoss;
     @JoinColumn(name = "CodShop", referencedColumnName = "CodShop")
     @ManyToOne
     private Shops codShop;
@@ -107,28 +104,12 @@ public class Staff implements Serializable {
         this.dateBorn = dateBorn;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getCp() {
-        return cp;
-    }
-
-    public void setCp(String cp) {
-        this.cp = cp;
     }
 
     public String getTelephone() {
@@ -145,6 +126,14 @@ public class Staff implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getIsBoss() {
+        return isBoss;
+    }
+
+    public void setIsBoss(Boolean isBoss) {
+        this.isBoss = isBoss;
     }
 
     public Shops getCodShop() {
@@ -179,5 +168,8 @@ public class Staff implements Serializable {
     public String toString() {
         return "entitiesDataBase.Staff[ codEmployer=" + codEmployer + " ]";
     }
-    
+    public Object[] getEmployee(){
+        return new Object[]{this.getNameEmployer(),this.getSurNameEmployer(),this.getDateBorn(),this.getAddress(),this.getTelephone()
+                ,this.getEmail(),this.getIsBoss(),this.getCodShop()};
+    }
 }

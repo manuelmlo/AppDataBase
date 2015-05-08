@@ -21,7 +21,7 @@ public class ListRenderShops extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
         Shop shop = (Shop) value;
-        setText(shop.getNameShop());
+        super.setText(shop.getNameShop());
         if (isSelected) {
             this.setBackground(Color.BLUE);
         } else {

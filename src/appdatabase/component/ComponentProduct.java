@@ -5,10 +5,10 @@
  */
 package appdatabase.component;
 
-import appdatabase.entity.Product;
 import appdatabase.format.MaxLenghtString;
 import appdatabase.format.Values;
 import appdatabase.listentities.ListProducts;
+import entitiesDataBase.Products;
 import java.awt.Color;
 import java.awt.Image;
 import java.text.NumberFormat;
@@ -21,8 +21,8 @@ import javax.swing.JColorChooser;
  * @author Manuel
  */
 public class ComponentProduct extends javax.swing.JPanel {
-    private ArrayList<Product> listProduct;
-    private Product product;
+    private ArrayList<Products> listProduct;
+    private Products product;
     private int numElementProduct;
     /**
      * Creates new form ComponentProduct
@@ -50,14 +50,13 @@ public class ComponentProduct extends javax.swing.JPanel {
         this.numElementProduct=numProduct;
         this.product=this.listProduct.get(numProduct);
         this.jTextFieldName.setText(this.product.getNameProduct());
-        this.jTextFieldBuilder.setText(this.product.getBuilder());
+        this.jTextFieldBuilder.setText(this.product.getModel());
         this.jTextFieldModel.setText(this.product.getMark());
         this.jTextFieldType.setText(this.product.getType());
-//        this.jTextAreaEspcifications.setText(this.product.getSpecifications().toString());
-        this.jTextAreaDescriptions.setText(this.product.getDescriptions());
-        this.jPanelColor.setBackground(this.product.getColour());
-//        this.jLabelPhoto.setIcon(this.getPhoto());
-        this.repaint();
+        this.jTextAreaEspcifications.setText(this.product.getSpecifications());
+        this.jTextAreaDescriptions.setText(this.product.getDescription());
+        this.jPanelColor.setBackground(new Color(this.product.getColor()));
+        this.jLabelPhoto.setIcon(new ImageIcon(this.product.getUrl()));
     }
     
     public void setDefault(){
@@ -74,7 +73,7 @@ public class ComponentProduct extends javax.swing.JPanel {
         this.repaint();
     }
     
-    public ArrayList<Product> getListProduct() {
+    public ArrayList<Products> getListProduct() {
         return listProduct;
     }
 
@@ -82,12 +81,12 @@ public class ComponentProduct extends javax.swing.JPanel {
         this.listProduct = listProduct.getListProducts();
     }
 
-    public Product getProduct() {
+    public Products getProduct() {
         return product;
     }
 
-    public Image getPhoto() {
-        return this.product.getPhotos(0);
+    public String getPhoto() {
+        return this.product.getUrl();
     }
 
     public void setPhoto(Image image) {
@@ -361,15 +360,16 @@ public class ComponentProduct extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jToggleButtonSelectModify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonSave)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonDelete)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButtonDelete)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,7 +380,7 @@ public class ComponentProduct extends javax.swing.JPanel {
                     .addComponent(jButtonDelete)
                     .addComponent(jToggleButtonSelectModify))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -5,8 +5,10 @@
  */
 package appdatabase.listentitiestablemodel;
 
-import appdatabase.entity.Shop;
+//import appdatabase.entity.Shops;
+import entitiesDataBase.Shops;
 import appdatabase.listentities.ListShops;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -15,12 +17,11 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ListShopsTableModel extends AbstractTableModel{
     private ListShops arrayListShop;
-    private final String[] nameColumns;
-    private Shop shop;
+    private final String[] nameColumns={"Nombre de la Tienda","Dirección","Teléfono", "E-mail"};
+    private Shops shop;
     
     public ListShopsTableModel (ListShops listShops){
         this.arrayListShop=listShops;
-        this.nameColumns=arrayListShop.getHEAD();
     }
 
     @Override
@@ -65,7 +66,7 @@ public class ListShopsTableModel extends AbstractTableModel{
                 shop.setAddress((String)aValue);
                 break;
             case 2:
-                shop.setPhone(Integer.valueOf((String)aValue));
+                shop.setTelephone((String)aValue);
                 break;
             case 3:
                 shop.setEmail((String)aValue);
@@ -73,8 +74,22 @@ public class ListShopsTableModel extends AbstractTableModel{
             default:       
         }  
     }
-    private void setShop(int numShop){
-        shop=arrayListShop.getListShop().get(numShop);
+
+    @Override
+    public void fireTableRowsInserted(int firstRow, int lastRow) {
+        super.fireTableRowsInserted(firstRow, lastRow); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public void fireTableCellUpdated(int row, int column) {
+        arrayListShop.addShop(shop);
+        super.fireTableCellUpdated(row, column); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void fireTableRowsDeleted(int firstRow, int lastRow) {
+        super.fireTableRowsDeleted(firstRow, lastRow); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

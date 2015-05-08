@@ -6,14 +6,14 @@
 package appdatabase.component;
 
 import appdatabase.entity.Product;
-import appdatabase.entity.Shop;
-import appdatabase.entity.Stock;
 import appdatabase.listcellrender.ListRenderProducts;
 import appdatabase.listcellrender.ListRenderShops;
 import appdatabase.listentities.ListProducts;
 import appdatabase.listentities.ListShops;
 import appdatabase.listentities.ListStocks;
-import java.util.ArrayList;
+import entitiesDataBase.Products;
+import entitiesDataBase.Shops;
+import entitiesDataBase.Stocks;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -24,11 +24,11 @@ import javax.swing.JComboBox;
  */
 public class ComponentStock extends javax.swing.JPanel {
     
-    private List<Shop> listShops;
-    private List<Product> listProducts;
-    private List<Stock> listStock;
-    private Stock stock;
-    private Shop shop;
+    private List<Shops> listShops;
+    private List<Products> listProducts;
+    private List<Stocks> listStock;
+    private Stocks stock;
+    private Shops shops;
     private Product product;
     private int numElementStock;
     private int numElementShop;
@@ -50,7 +50,7 @@ public class ComponentStock extends javax.swing.JPanel {
     
     }
     
-    public List<Shop> getListShops() {
+    public List<Shops> getListShops() {
         return listShops;
     }
     
@@ -79,7 +79,7 @@ public class ComponentStock extends javax.swing.JPanel {
 
     public void setShop(int numshop) {
         
-        this.shop=listShops.get(numshop);
+        this.shops=listShops.get(numshop);
         
     }
 
@@ -108,7 +108,7 @@ public class ComponentStock extends javax.swing.JPanel {
     }
     public void setElementStock(int numStock){
         this.stock=this.listStock.get(numStock);
-        this.setUnits(this.stock.getStockItem());
+        this.setUnits(this.stock.getStock());
     }
     
     
@@ -229,7 +229,7 @@ public class ComponentStock extends javax.swing.JPanel {
                     .addComponent(jButtonDelete)
                     .addComponent(jToggleButtonSelectModify))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -8,6 +8,7 @@ package entitiesDataBase;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Manuel Manzano López
+ * @author Manuel
  */
 @Entity
 @Table(name = "shops")
@@ -51,6 +52,8 @@ public class Shops implements Serializable {
     private String email;
     @OneToMany(mappedBy = "codShop")
     private Collection<Staff> staffCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shops")
+    private Collection<Stocks> stocksCollection;
 
     public Shops() {
     }
@@ -108,6 +111,15 @@ public class Shops implements Serializable {
         this.staffCollection = staffCollection;
     }
 
+    @XmlTransient
+    public Collection<Stocks> getStocksCollection() {
+        return stocksCollection;
+    }
+
+    public void setStocksCollection(Collection<Stocks> stocksCollection) {
+        this.stocksCollection = stocksCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -131,6 +143,10 @@ public class Shops implements Serializable {
     @Override
     public String toString() {
         return "entitiesDataBase.Shops[ codShop=" + codShop + " ]";
+    }
+    public Object[] getShop(){
+        return new Object[]{this.getNameShop(),this.getAddress(),this.getTelephone()
+                ,this.getEmail()};
     }
     
 }

@@ -37,7 +37,7 @@ public class ListStockTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return arrayListProducts.getListStock().get(rowIndex).getStock()[columnIndex];
+        return arrayListProducts.getListStock().get(rowIndex).getStocks()[columnIndex];
     }
 
     @Override
@@ -74,9 +74,9 @@ public class ListStockTableModel extends AbstractTableModel{
         }
     }
     
-    public void setStock(int numStock){
-        this.stock= arrayListProducts.getListStock().get(numStock);
-    }
+//    public void setStocks(int numStock){
+//        this.stock= arrayListProducts.getListStock().get(numStock);
+//    }
     
     
 }

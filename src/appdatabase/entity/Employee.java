@@ -5,6 +5,7 @@
  */
 package appdatabase.entity;
 
+import entitiesDataBase.Shops;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,8 +14,6 @@ import java.util.Date;
  * @author Manuel Manzano López
  */
 public class Employee {
-    private final String[] HEAD={"Nombre","Apellidos","Fecha Nacimiento",
-        "Dirección","Teléfono", "E-mail","Empleado","Tienda"};
     private int codEmploye;
     private String name;
     private String surname;
@@ -23,7 +22,7 @@ public class Employee {
     private int phone;
     private String email;
     private boolean ismanager;
-    private Shop codshop;
+    private Shops codshop;
     
     public Employee(){
         
@@ -31,7 +30,7 @@ public class Employee {
     }
     
     public Employee(int codEmploye, String name, String surname,Date dateborn,String address,
-            int phone, String email,boolean ismanager, Shop codShop){
+            int phone, String email,boolean ismanager, Shops codShop){
         this.codEmploye=codEmploye;
         this.name=name;
         this.surname=surname;
@@ -89,11 +88,11 @@ public class Employee {
         this.email = email;
     }
 
-    public Shop getCodshop() {
+    public Shops getCodshop() {
         return codshop;
     }
 
-    public void setCodshop(Shop codshop) {
+    public void setCodshop(Shops codshop) {
         this.codshop = codshop;
     }
 
@@ -117,8 +116,5 @@ public class Employee {
     public Object[] getEmployee(){
         return new Object[]{this.getName(),this.getSurname(),this.getDateBorn(),this.getAddress(),this.getPhone()
                 ,this.getEmail(),this.isIsmanager(),this.getCodshop()};
-    }
-    public String[] getHead(){
-        return HEAD;
     }
 }

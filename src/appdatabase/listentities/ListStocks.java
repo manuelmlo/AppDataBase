@@ -5,7 +5,7 @@
  */
 package appdatabase.listentities;
 
-import appdatabase.entity.Stock;
+import entitiesDataBase.Stocks;
 import java.util.ArrayList;
 
 /**
@@ -13,38 +13,38 @@ import java.util.ArrayList;
  * @author Manuel Manzano López
  */
 public class ListStocks {
-    private final String[] HEAD= new Stock().getHead();
+    private final String[] HEAD={"Tienda","Producto","Stock"};
     private final String NAME="Stock";
-    private ArrayList<Stock> listStock;
+    private ArrayList<Stocks> listStock;
     
     public ListStocks(){
         listStock= new ArrayList();
     }
     public ListStocks(String Default){
         listStock= new ArrayList();
-        this.setDefault();
+//        this.setDefault();
     }
-    public void addStock(Stock stock){
+    public void addStock(Stocks stock){
         listStock.add(stock);
     }
    
-    public Stock getStockById(int shop, int product){
-        for (Stock listStock1 : listStock) {
-            if (listStock1.getShop().getCodShop() == 
-                    shop && listStock1.getProduct().getCodProduct() == product) {
+    public Stocks getStockById(int shop, int product){
+        for (Stocks listStock1 : listStock) {
+            if (listStock1.getShops().getCodShop() == 
+                    shop && listStock1.getProducts().getCodProduct() == product) {
                 return listStock1;
             }
         }
         return null;
     }
-    public void setDefault(){
-        this.addStock(new Stock(new ListShops("Default").getShopById(0),new ListProducts("Default").getProductById(0), 3));
-        this.addStock(new Stock(new ListShops("Default").getShopById(1),new ListProducts("Default").getProductById(0), 5));
-        this.addStock(new Stock(new ListShops("Default").getShopById(0),new ListProducts("Default").getProductById(1), 8));
-        this.addStock(new Stock(new ListShops("Default").getShopById(1),new ListProducts("Default").getProductById(1), 4));
-        this.addStock(new Stock(new ListShops("Default").getShopById(0),new ListProducts("Default").getProductById(2), 6));
-        this.addStock(new Stock(new ListShops("Default").getShopById(1),new ListProducts("Default").getProductById(2), 2));
-    }
+//    public void setDefault(){
+//        this.addStock(new Stocks(new ListShops().getShopById(0),new ListProducts().getProductById(0), 3));
+//        this.addStock(new Stocks(new ListShops().getShopById(1),new ListProducts().getProductById(0), 5));
+//        this.addStock(new Stocks(new ListShops().getShopById(0),new ListProducts().getProductById(1), 8));
+//        this.addStock(new Stocks(new ListShops().getShopById(1),new ListProducts().getProductById(1), 4));
+//        this.addStock(new Stocks(new ListShops().getShopById(0),new ListProducts().getProductById(2), 6));
+//        this.addStock(new Stocks(new ListShops().getShopById(1),new ListProducts().getProductById(2), 2));
+//    }
 
     public String[] getHEAD() {
         return HEAD;
@@ -54,7 +54,7 @@ public class ListStocks {
         return NAME;
     }
     
-    public ArrayList<Stock> getListStock() {
+    public ArrayList<Stocks> getListStock() {
         return listStock;
     }
     public int getSize(){

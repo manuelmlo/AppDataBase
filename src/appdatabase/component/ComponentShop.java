@@ -5,21 +5,24 @@
  */
 package appdatabase.component;
 
-import appdatabase.entity.Shop;
 import appdatabase.format.MaxLenghtString;
 import appdatabase.format.Values;
 import appdatabase.listentities.ListShops;
-import java.util.ArrayList;
+import appdatabase.listentitiestablemodel.ListShopsTableModel;
+import appdatabase.main;
+import entitiesDataBase.Shops;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Manuel Manzano López
  */
 public class ComponentShop extends javax.swing.JPanel {
-    private List<Shop> listShops ;
-    private Shop shop;
+    private List<Shops> listShops ;
+    private Shops shops;
     private int numElementShop;
+    private short type=0;
     
     
     public ComponentShop() {
@@ -42,19 +45,32 @@ public class ComponentShop extends javax.swing.JPanel {
     
     public void setElementShop(int numShop){
         this.numElementShop=numShop;
-        this.shop=listShops.get(numShop);
-        this.setNameShop(this.shop.getNameShop());
-        this.setAddress(this.shop.getAddress());
-        this.setPhone(this.shop.getPhone());
-        this.setEmail(this.shop.getEmail());
+        if(this.numElementShop!=-1){
+            this.jToggleButtonSelectModify.setEnabled(true);
+            this.actionModify();
+        }
+        this.shops=listShops.get(numShop);
+        this.setEnabledComponent(true);
+        this.setNameShop(this.shops.getNameShop());
+        this.setAddress(this.shops.getAddress());
+        this.setPhone(this.shops.getTelephone());
+        this.setEmail(this.shops.getEmail());
         this.repaint();
     }
     
     public void setDefault(){
         this.setNameShop("Elemento no seleccionado");
         this.setAddress("Elemento no seleccionado");
-        this.setPhone(0);
+        this.setPhone("0");
         this.setEmail("Elemento no seleccionado");
+        this.setEditable(false);
+        this.setEnabledComponent(false);
+        this.jToggleButtonSelectModify.setEnabled(false);
+        this.jButtonDelete.setEnabled(false);
+        this.jButtonNew.setEnabled(false);
+        this.jButtonSave.setEnabled(false);
+        this.shops=null;
+        this.numElementShop=-1;
         this.repaint();
     }
     
@@ -90,7 +106,7 @@ public class ComponentShop extends javax.swing.JPanel {
         return jTextFieldPhone.getText();
     }
 
-    public void setPhone(int Phone) {
+    public void setPhone(String Phone) {
         this.jTextFieldPhone.setText(String.valueOf(Phone));
     }
 
@@ -116,6 +132,7 @@ public class ComponentShop extends javax.swing.JPanel {
         jButtonSave = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jToggleButtonSelectModify = new javax.swing.JToggleButton();
+        jButtonNew = new javax.swing.JButton();
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -197,21 +214,33 @@ public class ComponentShop extends javax.swing.JPanel {
             }
         });
 
+        jButtonNew.setText("Nuevo");
+        jButtonNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToggleButtonSelectModify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonSave)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDelete)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jButtonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jToggleButtonSelectModify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,46 +248,121 @@ public class ComponentShop extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSave)
-                    .addComponent(jButtonDelete)
                     .addComponent(jToggleButtonSelectModify))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDelete)
+                    .addComponent(jButtonNew))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        listShops.add(numElementShop, shop);
-        listShops.remove(numElementShop+1);
+       switch (type){
+           case 0:
+                break;
+            case 1:
+                Shops tmp = new Shops();
+                tmp.setNameShop(jTextFieldName.getText());
+                tmp.setAddress(jTextFieldAddress.getText());
+                tmp.setEmail(jTextFieldEmail.getText());
+                tmp.setTelephone(jTextFieldPhone.getText());
+                main.entityManager.getTransaction().begin();
+                main.entityManager.persist(tmp);
+                main.entityManager.getTransaction().commit();
+                this.listShops.add(tmp);
+                break;
+            case 2:
+                shops.setNameShop(jTextFieldName.getText());
+                shops.setAddress(jTextFieldAddress.getText());
+                shops.setEmail(jTextFieldEmail.getText());
+                shops.setTelephone(jTextFieldPhone.getText());
+                main.entityManager.getTransaction().begin();
+                main.entityManager.merge(shops);
+                main.entityManager.getTransaction().commit();
+                break;
+            default:
+        }
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jToggleButtonSelectModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonSelectModifyActionPerformed
-        if(jToggleButtonSelectModify.isSelected()){ 
-            this.actionModify();
-        }else{
+        if (jToggleButtonSelectModify.isSelected()) {
             this.actionSelect();
+        } else {
+            this.actionModify();
         }
     }//GEN-LAST:event_jToggleButtonSelectModifyActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        listShops.remove(numElementShop);
-        this.setDefault();                
+        if (numElementShop >= 0) {
+            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this,
+                    "¿Desea eleminar el elemento selecionado?",
+                    "Pregunta",
+                    JOptionPane.YES_NO_OPTION)) {
+                main.entityManager.getTransaction().begin();
+                main.entityManager.remove(this.shops);
+                main.entityManager.getTransaction().commit();
+                listShops.remove(shops);
+                
+                this.setDefault();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha selecionado \n "
+                    + "ningún elemento", 
+                    "Información", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        }  
     }//GEN-LAST:event_jButtonDeleteActionPerformed
-    private void actionSelect(){
-        jToggleButtonSelectModify.setText("Consultar");
-        jToggleButtonSelectModify.setSelected(false);
-        this.jButtonSave.setEnabled(false);
-        this.jButtonDelete.setEnabled(true);
-    }
-    private void actionModify(){
-        jToggleButtonSelectModify.setText("Modificar");
-        jToggleButtonSelectModify.setSelected(true);
+
+    private void jButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewActionPerformed
+        this.type=1;
+        this.setEditable(true);
+        this.jTextFieldName.setText("Introduce nombre.");
+        this.jTextFieldAddress.setText("Introduce dirección.");
+        this.jTextFieldPhone.setText("Introduce un telefóno.");
+        this.jTextFieldEmail.setText("Introduce e-mail.");
         this.jButtonSave.setEnabled(true);
         this.jButtonDelete.setEnabled(false);
+        
+    }//GEN-LAST:event_jButtonNewActionPerformed
+    private void actionSelect(){
+        jToggleButtonSelectModify.setText("Modificar");
+        this.jButtonSave.setEnabled(true);
+        this.jButtonDelete.setEnabled(false);
+        this.jButtonNew.setEnabled(false);
+        this.setEditable(true);
+        this.type=0;
     }
-
+    private void actionModify(){
+        jToggleButtonSelectModify.setText("Consultar");
+        this.jButtonSave.setEnabled(false);
+        this.jButtonDelete.setEnabled(true);
+        this.jButtonNew.setEnabled(true);
+        this.setEditable(false);
+        this.type=2;
+    }
+    public void setEditable(boolean status){
+            this.jTextFieldName.setEditable(status);
+            this.jTextFieldAddress.setEditable(status);
+            this.jTextFieldEmail.setEditable(status);
+            this.jTextFieldPhone.setEditable(status);
+    }
+    public void setEnabledComponent(boolean status){
+            this.jTextFieldName.setEnabled(status);
+            this.jTextFieldAddress.setEnabled(status);
+            this.jTextFieldEmail.setEnabled(status);
+            this.jTextFieldPhone.setEnabled(status);
+    }
+    
+    public void setModelTable(ListShopsTableModel listShopsTableModel){
+         
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonNew;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

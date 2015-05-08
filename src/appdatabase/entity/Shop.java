@@ -14,7 +14,7 @@ public class Shop {
     private int codShop ;
     private String nameShop ;
     private String address;
-    private int phone;
+    private int Telephone;
     private String email; 
     
     public Shop(){
@@ -25,7 +25,7 @@ public class Shop {
         this.codShop=codShop;
         this.nameShop=nameShop;
         this.address=address;
-        this.phone=phone;
+        this.Telephone=phone;
         this.email=email;
     
     }
@@ -53,12 +53,12 @@ public class Shop {
         this.address = address;
     }
 
-    public int getPhone() {
-        return phone;
+    public int getTelephone() {
+        return Telephone;
     }
 
-    public void setPhone(int phone) {
-        this.phone = phone;
+    public void setTelephone(int phone) {
+        this.Telephone = phone;
     }
 
     public String getEmail() {
@@ -69,7 +69,7 @@ public class Shop {
         this.email = email;
     }
     public Object[] getShop(){
-        return new Object[]{this.getNameShop(),this.getAddress(),this.getPhone()
+        return new Object[]{this.getNameShop(),this.getAddress(),this.getTelephone()
                 ,this.getEmail()};
     }
     public String[] getHead(){
